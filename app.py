@@ -2,16 +2,18 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import streamlit as st
+from bowler_analysis import load_bowler_details
+
 plt.style.use('dark_background')
 
 st.set_page_config(layout='wide', page_title='IPL Data Analytics')
 st.title("IPL Data Analytics")
 
-new_df = pd.read_csv("ipldata.csv")
-matches = pd.read_csv("matches.csv")
-player_data = pd.read_csv('total_data.csv')
-highest_score = pd.read_csv('highest_score.csv')
-duck = pd.read_csv('goldenduck.csv')
+new_df = pd.read_csv("dataset\\ipldata.csv")
+matches = pd.read_csv("dataset\\matches.csv")
+player_data = pd.read_csv('dataset\\total_data.csv')
+highest_score = pd.read_csv('dataset\\highest_score.csv')
+duck = pd.read_csv('dataset\\goldenduck.csv')
 
 
 batsman_runs_per_match = new_df.groupby(['season', 'match_id', 'batter'])['batsman_runs'].sum().reset_index()
@@ -26,11 +28,11 @@ is_pom = 0
 century_hai = 0
 is_thirty_plus = 0
 
-player_list = ['A Badoni', 'A Mishra', 'AB de Villiers', 'AD Russell', 'AK Markram', 'AM Rahane', 'AR Patel', 'AT Rayudu', 'Abdul Samad', 'Abhishek Sharma', 'B Sai Sudharsan', 'BB McCullum', 'C Green', 'CH Gayle', 'D Padikkal', 'DA Miller', 'DA Warner', 'DJ Hooda', 'DP Conway', 'EJG Morgan', 'F du Plessis', 'G Gambhir', 'GJ Maxwell', 'Gurkeerat Singh', 'H Klaasen', 'HH Pandya', 'Ishan Kishan', 'JC Buttler', 'JJ Roy', 'JM Bairstow', 'JM Sharma', 'KA Pollard', 'KD Karthik', 'KH Pandya', 'KK Nair', 'KL Rahul', 'KM Jadhav', 'KS Williamson', 'KV Sharma', 'LS Livingstone', 'Lalit Yadav', 'M Shahrukh Khan', 'MA Agarwal', 'MC Henriques', 'MK Lomror', 'MK Pandey', 'MM Ali', 'MP Stoinis', 'MR Marsh', 'MS Bisla', 'MS Dhoni', 'Mandeep Singh', 'N Pooran', 'N Rana', 'P Simran Singh', 'PA Patel', 'PD Salt', 'PJ Cummins', 'PP Shaw', 'Q de Kock', 'R Dravid', 'R Parag', 'R Tewatia', 'RA Jadeja', 'RA Tripathi', 'RD Gaikwad', 'RG Sharma', 'RK Singh', 'RM Patidar', 'RR Pant', 'RR Rossouw', 'RV Uthappa', 'Rashid Khan', 'S Dhawan', 'S Dube', 'SA Yadav', 'SC Ganguly', 'SK Raina', 'SM Curran', 'SN Khan', 'SO Hetmyer', 'SP Narine', 'SR Tendulkar', 'SS Iyer', 'SS Tiwary', 'SV Samson', 'Shahbaz Ahmed', 'Shubman Gill', 'TH David', 'TM Head', 'Tilak Varma', 'V Kohli', 'V Sehwag', 'V Shankar', 'VR Iyer', 'WP Saha', 'Washington Sundar', 'YBK Jaiswal', 'Yuvraj Singh']
+player_list = ['A Badoni', 'A Mishra', 'AB de Villiers', 'AD Russell', 'AK Markram', 'AM Rahane', 'AR Patel', 'AT Rayudu', 'Abdul Samad', 'Abhishek Sharma', 'B Sai Sudharsan', 'BB McCullum', 'C Green', 'CH Gayle', 'D Padikkal', 'DA Miller', 'DA Warner', 'DJ Hooda', 'DP Conway', 'EJG Morgan', 'F du Plessis', 'G Gambhir', 'GJ Maxwell', 'Gurkeerat Singh', 'H Klaasen', 'HH Pandya', 'Ishan Kishan', 'JC Buttler', 'JJ Roy', 'JM Bairstow', 'JM Sharma', 'KA Pollard', 'KD Karthik', 'KH Pandya', 'KK Nair', 'KL Rahul', 'KM Jadhav', 'KS Williamson', 'KV Sharma', 'LS Livingstone', 'Lalit Yadav', 'M Shahrukh Khan', 'MA Agarwal', 'MC Henriques', 'MK Lomror', 'MK Pandey', 'MM Ali', 'MP Stoinis', 'MR Marsh', 'MS Dhoni', 'Mandeep Singh', 'N Pooran', 'N Rana', 'P Simran Singh', 'PA Patel', 'PD Salt', 'PJ Cummins', 'PP Shaw', 'Q de Kock', 'R Dravid', 'R Parag', 'R Tewatia', 'RA Jadeja', 'RA Tripathi', 'RD Gaikwad', 'RG Sharma', 'RK Singh', 'RM Patidar', 'RR Pant', 'RR Rossouw', 'RV Uthappa', 'Rashid Khan', 'S Dhawan', 'S Dube', 'SA Yadav', 'SC Ganguly', 'SK Raina', 'SM Curran', 'SN Khan', 'SO Hetmyer', 'SP Narine', 'SR Tendulkar', 'SS Iyer', 'SS Tiwary', 'SV Samson', 'Shahbaz Ahmed', 'Shubman Gill', 'TH David', 'TM Head', 'Tilak Varma', 'V Kohli', 'V Sehwag', 'V Shankar', 'VR Iyer', 'WP Saha', 'Washington Sundar', 'YBK Jaiswal', 'Yuvraj Singh']
 
-
+bowler_list = ['YS Chahal', 'PP Chawla', 'DJ Bravo', 'B Kumar', 'R Ashwin', 'SP Narine', 'A Mishra', 'SL Malinga', 'JJ Bumrah', 'RA Jadeja', 'Harbhajan Singh', 'Rashid Khan', 'UT Yadav', 'Sandeep Sharma', 'HV Patel', 'MM Sharma', 'Mohammed Shami', 'AR Patel', 'TA Boult', 'K Rabada', 'AD Russell', 'A Nehra', 'R Vinay Kumar', 'Z Khan', 'JD Unadkat', 'CH Morris', 'SN Thakur', 'Mohammed Siraj', 'I Sharma', 'Kuldeep Yadav', 'DS Kulkarni', 'CV Varun', 'Imran Tahir', 'DL Chahar', 'KV Sharma', 'Arshdeep Singh', 'KH Pandya', 'RD Chahar', 'Avesh Khan', 'KK Ahmed', 'MM Patel', 'KA Pollard']
 st.sidebar.title("IPL Data Analytics")
-option = st.sidebar.selectbox('Select One', ['Batsman'])
+option = st.sidebar.selectbox('Select One', ['Batsman', 'Bowler'])
 
 def load_batsman_details(batsman):
     st.title(batsman)
@@ -107,17 +109,6 @@ def load_batsman_details(batsman):
 
 
         with col24:
-            # try:
-            #     is_series = player_no_of_30.shape[1]
-            # except:
-            #     st.metric('30+ Runs', '0')
-            # else:
-            #     global is_thirty_plus
-            #     is_thirty_plus = 1
-            #     if is_series == 1:
-            #         st.metric('30+ Runs', str(player_no_of_30['batsman_runs']))
-            #     else:
-            #         st.metric('30+ Runs', str(player_no_of_30['batsman_runs'].values.sum()))
             st.metric('Fours', str(player['fours'].values[0]))
 
         with col25:
@@ -129,15 +120,6 @@ def load_batsman_details(batsman):
     col1, col2 = st.columns(2)
 
     with col1:
-        
-        # fig, ax = plt.subplots()
-        # ax.bar(run_against_teams.index, run_against_teams.values)
-        # plt.title(f"'{batsman}' Runs Against Each Team")
-        # plt.xticks(rotation=90)
-        # ax.set_xlabel('Team Name')
-        # ax.set_ylabel('Total Runs')
-        # plt.show()
-        # st.pyplot(fig)
         df_batter_season = new_df[new_df['batter']  == batsman]
         runs = df_batter_season.groupby('season')['batsman_runs'].sum()
         balls = df_batter_season.groupby(['season','match_id'])['batsman_runs'].count().reset_index().groupby('season')['batsman_runs'].sum()
@@ -166,20 +148,6 @@ def load_batsman_details(batsman):
     col3, col4 = st.columns(2)
 
     with col3:
-        # df_batter_season = new_df[new_df['batter']  == batsman]
-        # runs = df_batter_season.groupby('season')['batsman_runs'].sum()
-        # balls = df_batter_season.groupby(['season','match_id'])['batsman_runs'].count().reset_index().groupby('season')['batsman_runs'].sum()
-        # runs = runs.reset_index()
-        # new_data = runs.merge(balls, on='season')
-        # new_data['strike_rate'] = (new_data['batsman_runs_x']/new_data['batsman_runs_y']) * 100
-        # fig3, ax3 = plt.subplots()
-        # plt.plot(new_data['season'], new_data['strike_rate'], marker='o')
-        # plt.title(f"{batsman}'s Strike Rate Over Years")
-        # plt.xticks(rotation=45)
-        # ax3.set_xlabel('Year')
-        # ax3.set_ylabel('Strike Rate')
-        # plt.show()
-        # st.pyplot(fig3)
         if century_hai == 1:
             fig5, ax5 = plt.subplots()
             plt.bar(player_no_of_100['season'], player_no_of_100['batsman_runs'])
@@ -210,18 +178,6 @@ def load_batsman_details(batsman):
     col5, col6 = st.columns(2)
 
     with col5:
-
-        # if century_hai == 1:
-        #     fig5, ax5 = plt.subplots()
-        #     plt.bar(player_no_of_100['season'], player_no_of_100['batsman_runs'])
-        #     plt.title(f"{batsman}'s 100+ runs over years")
-        #     ax5.set_xlabel('Year')
-        #     ax5.set_ylabel("No of 100's")
-        #     plt.xticks(rotation=45)
-        #     plt.show()
-        #     st.pyplot(fig5)
-        # else:
-        #     st.markdown(f'# 0 centuries hit by {batsman} in IPL Career')
         try:
             over_label_anlysis =  new_df.pivot_table(index='batter', columns='over_label', values='batsman_runs', aggfunc='sum').loc[batsman]
             over_label_anlysis.fillna(0, inplace=True)
@@ -238,19 +194,6 @@ def load_batsman_details(batsman):
         
     
     with col6:
-        # try:
-        #     player_no_of_30 = batsman_run_ge30.groupby(['season', 'batter'])['batsman_runs'].count().reset_index(level='season').loc[batsman]
-        # except:
-        #     st.markdown(f'# 0 runs between 30 and 49 hit by {batsman} in IPL Career')
-        # else:
-        #     fig6, ax6 = plt.subplots()
-        #     plt.bar(player_no_of_30['season'], player_no_of_30['batsman_runs'])
-        #     plt.title(f"{batsman}'s 30+ runs over years")
-        #     ax6.set_xlabel('Year')
-        #     ax6.set_ylabel("No of 30's")
-        #     plt.xticks(rotation=45)
-        #     plt.show()
-        #     st.pyplot(fig6)
         try:
             total_run_in_each_over = new_df.pivot_table(index=['batter'], columns=['over'], values='batsman_runs', aggfunc='sum').loc[batsman]
             total_run_in_each_over.fillna(0, inplace=True)
@@ -274,23 +217,6 @@ def load_batsman_details(batsman):
     col7, col8 = st.columns(2)
 
     with col7:
-        # try:
-        #     total_run_in_each_over = new_df.pivot_table(index=['batter'], columns=['over'], values='batsman_runs', aggfunc='sum').loc[batsman]
-        #     total_run_in_each_over.fillna(0, inplace=True)
-            
-        #     max_index = total_run_in_each_over.idxmax()
-
-        #     explode = [0.2 if i == max_index else 0 for i in range(1, len((total_run_in_each_over.values)) + 1)]
-
-        # except:
-        #     st.markdown(f"{batsman}'s has not scored runs")
-        # else:
-        #     fig7, ax = plt.subplots()
-        #     ax.pie(total_run_in_each_over.values, labels=total_run_in_each_over.index, autopct='%1.1f%%', explode=explode)
-        #     ax.axis('equal')
-        #     plt.title(f"{batsman}'s runs distribution in each over" )
-        #     plt.show()
-        #     st.pyplot(fig7)
         try:
             season_sixes = pd.pivot_table(new_df, values='batsman_runs',index='batter', columns='season', aggfunc=lambda x: (x == 6).sum()).loc[batsman]
         except:
@@ -323,19 +249,6 @@ def load_batsman_details(batsman):
     col9, col10 = st.columns(2)
 
     with col9:
-        # try:
-        #     season_sixes = pd.pivot_table(new_df, values='batsman_runs',index='batter', columns='season', aggfunc=lambda x: (x == 6).sum()).loc[batsman]
-        # except:
-        #     st.markdown(f"0 sixes by {batsman} in IPL Career")
-        # else:
-        #     fig9, ax = plt.subplots()
-        #     plt.plot(season_sixes, marker='*')
-        #     plt.title(f"{batsman} Sixes in IPL Carrer")
-        #     plt.ylabel('No of sixes')
-        #     plt.xlabel('Year')
-        #     plt.xticks(rotation=45)
-        #     plt.show()
-        #     st.pyplot(fig9)
         try:
             label_sixes = pd.pivot_table(new_df, values='batsman_runs',index='batter', columns='over_label', aggfunc=lambda x: (x == 6).sum()).loc[batsman]
             label_sixes.fillna(0, inplace=True)
@@ -351,19 +264,6 @@ def load_batsman_details(batsman):
             st.pyplot(fig10)
 
     with col10:
-        # try:
-        #     label_sixes = pd.pivot_table(new_df, values='batsman_runs',index='batter', columns='over_label', aggfunc=lambda x: (x == 6).sum()).loc[batsman]
-        #     label_sixes.fillna(0, inplace=True)
-        #     max_index = label_sixes.idxmax()
-        #     explode = [0.05 if i == max_index else 0 for i in ['death_over', 'middle_over', 'power_play', ]]
-        # except:
-        #     st.markdwon(f"0 sixes by {batsman} in Each Category")
-        # else:
-        #     fig10, ax = plt.subplots()
-        #     ax.pie(label_sixes.values,labels=label_sixes.index, autopct='%1.1f%%', explode=explode)
-        #     plt.title(f'{label_sixes.name} Sixes in each Category')
-        #     plt.show()
-        #     st.pyplot(fig10)
         try:
             total_sixes_per_over = pd.pivot_table(new_df, values='batsman_runs',index='batter', columns='over', aggfunc=lambda x: (x == 6).sum()).loc[batsman]
             total_sixes_per_over.fillna(0, inplace=True)
@@ -429,19 +329,6 @@ def load_batsman_details(batsman):
     
 
     with col14:
-        # try:
-        #     over_label_anlysis =  new_df.pivot_table(index='batter', columns='over_label', values='batsman_runs', aggfunc='sum').loc[batsman]
-        #     over_label_anlysis.fillna(0, inplace=True)
-        #     max_index = over_label_anlysis.idxmax()
-        #     explode = [0.05 if i == max_index else 0 for i in ['death_over', 'middle_over', 'power_play', ]]
-        # except:
-        #     st.markdwon(f"{batsman} has not played batting")
-        # else:
-        #     fig14, ax = plt.subplots()
-        #     ax.pie(over_label_anlysis.values, labels=over_label_anlysis.index, autopct='%1.1f%%', explode=explode)
-        #     plt.title(f"{batsman}'s distribution of runs in each category")
-        #     plt.show()
-        #     st.pyplot(fig14)
         fig, ax = plt.subplots()
         ax.bar(run_against_teams.index, run_against_teams.values)
         plt.title(f"'{batsman}' Runs Against Each Team")
@@ -472,16 +359,14 @@ def load_batsman_details(batsman):
 
 if option == 'Batsman':
     selected_batsman = st.sidebar.selectbox('Select Batsman', player_list)
-    # sorted(list(set(df['investors'].str.split(',').sum())))
     btn2 = st.sidebar.button(f'Find {selected_batsman} Details')
 
     if btn2:
         load_batsman_details(selected_batsman)
        
-# elif option == 'Bowler':
-#     # selected_investor = st.sidebar.selectbox('Select Startup',sorted(list(set(df['investors'].str.split(',').sum()))))
-#     # btn2 = st.sidebar.button('Find Investor Details')
+elif option == 'Bowler':
+    selected_bowler = st.sidebar.selectbox('Select Bowler', bowler_list)
+    btn2 = st.sidebar.button(f'Find {selected_bowler} Details')
 
-#     # if btn2:
-#     #     # load_investor_details(selected_investor)
-#     st.title('Bowler')
+    if btn2:
+        load_bowler_details(selected_bowler)
