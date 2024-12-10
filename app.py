@@ -58,11 +58,11 @@ def load_batsman_details(batsman):
         with col21:
             try:
                 pom = matches.groupby(['player_of_match', 'season'])['id'].count().reset_index(level='season').loc[batsman]
-                is_series_pom = 1
+                is_series_pom = pom.shape[1]
             except:
                 st.metric("Total Man of Match Award",'0')
             else:
-                if is_series_pom:
+                if is_series_pom == 1:
                     st.metric('Total Man of Match Award', str(pom['id']))
                 else:  
                     st.metric('Total Man of Match Award', str(pom['id'].values.sum()))
@@ -75,7 +75,7 @@ def load_batsman_details(batsman):
             else:
                 global is_half_century
                 is_half_century = 1
-                if is_series_50:
+                if is_series_50 == 1:
                     st.metric("Half Centuries", str(player_no_of_50['batsman_runs']))
                 else:
                     st.metric("Half Centuries", str(player_no_of_50['batsman_runs'].values.sum()))
@@ -91,7 +91,7 @@ def load_batsman_details(batsman):
             else:
                 global century_hai
                 century_hai = 1
-                if is_series_50:
+                if is_series_100 == 1:
                     st.metric("Half Centuries", str(player_no_of_100['batsman_runs']))
                 else:
                     st.metric("Half Centuries", str(player_no_of_100['batsman_runs'].values.sum()))
@@ -99,7 +99,6 @@ def load_batsman_details(batsman):
 
         with col24:
             # try:
-            #     player_no_of_30 = batsman_run_ge30.groupby(['season', 'batter'])['batsman_runs'].count().reset_index(level='season').loc[batsman]
             #     is_series = player_no_of_30.shape[1]
             # except:
             #     st.metric('30+ Runs', '0')
@@ -189,7 +188,11 @@ def load_batsman_details(batsman):
         
     
     with col6:
-        if is_thirty_plus == 1:
+        try:
+            player_no_of_30 = batsman_run_ge30.groupby(['season', 'batter'])['batsman_runs'].count().reset_index(level='season').loc[batsman]
+        except:
+            st.markdown(f'# 0 runs between 30 and 49 hit by {batsman} in IPL Career')
+        else:
             fig6, ax6 = plt.subplots()
             plt.bar(player_no_of_30['season'], player_no_of_30['batsman_runs'])
             plt.title(f"{batsman}'s 30+ runs over years")
@@ -198,8 +201,6 @@ def load_batsman_details(batsman):
             plt.xticks(rotation=45)
             plt.show()
             st.pyplot(fig6)
-        else:
-            st.markdown(f'# 0 runs between 30 and 49 hit by {batsman} in IPL Career')
 
 
     col7, col8 = st.columns(2)
