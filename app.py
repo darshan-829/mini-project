@@ -26,7 +26,7 @@ is_pom = 0
 century_hai = 0
 is_thirty_plus = 0
 
-player_list = ['A Badoni', 'A Mishra', 'AB de Villiers', 'AD Russell', 'AK Markram', 'AM Rahane', 'AR Patel', 'AT Rayudu', 'Abdul Samad', 'Abhishek Sharma', 'B Sai Sudharsan', 'BB McCullum', 'C Green', 'CH Gayle', 'D Padikkal', 'DA Miller', 'DA Warner', 'DJ Hooda', 'DP Conway', 'EJG Morgan', 'F du Plessis', 'G Gambhir', 'GJ Maxwell', 'Gurkeerat Singh', 'H Klaasen', 'HH Pandya', 'Ishan Kishan', 'JC Buttler', 'JJ Roy', 'JM Bairstow', 'JM Sharma', 'KA Pollard', 'KD Karthik', 'KH Pandya', 'KK Nair', 'KL Rahul', 'KM Jadhav', 'KS Williamson', 'KV Sharma', 'LS Livingstone', 'Lalit Yadav', 'M Shahrukh Khan', 'MA Agarwal', 'MC Henriques', 'MK Lomror', 'MK Pandey', 'MK Tiwary', 'MM Ali', 'MP Stoinis', 'MR Marsh', 'MS Bisla', 'MS Dhoni', 'Mandeep Singh', 'N Pooran', 'N Rana', 'P Simran Singh', 'PA Patel', 'PD Salt', 'PJ Cummins', 'PP Shaw', 'Q de Kock', 'R Ashwin', 'R Dravid', 'R Parag', 'R Tewatia', 'RA Jadeja', 'RA Tripathi', 'RD Gaikwad', 'RG Sharma', 'RK Singh', 'RM Patidar', 'RR Pant', 'RR Rossouw', 'RV Uthappa', 'Rashid Khan', 'S Dhawan', 'S Dube', 'SA Yadav', 'SC Ganguly', 'SK Raina', 'SM Curran', 'SN Khan', 'SO Hetmyer', 'SP Narine', 'SR Tendulkar', 'SS Iyer', 'SS Tiwary', 'SV Samson', 'Shahbaz Ahmed', 'Shubman Gill', 'TH David', 'TM Head', 'Tilak Varma', 'V Kohli', 'V Sehwag', 'V Shankar', 'VR Iyer', 'WP Saha', 'Washington Sundar', 'YBK Jaiswal', 'Yuvraj Singh']
+player_list = ['A Badoni', 'A Mishra', 'AB de Villiers', 'AD Russell', 'AK Markram', 'AM Rahane', 'AR Patel', 'AT Rayudu', 'Abdul Samad', 'Abhishek Sharma', 'B Sai Sudharsan', 'BB McCullum', 'C Green', 'CH Gayle', 'D Padikkal', 'DA Miller', 'DA Warner', 'DJ Hooda', 'DP Conway', 'EJG Morgan', 'F du Plessis', 'G Gambhir', 'GJ Maxwell', 'Gurkeerat Singh', 'H Klaasen', 'HH Pandya', 'Ishan Kishan', 'JC Buttler', 'JJ Roy', 'JM Bairstow', 'JM Sharma', 'KA Pollard', 'KD Karthik', 'KH Pandya', 'KK Nair', 'KL Rahul', 'KM Jadhav', 'KS Williamson', 'KV Sharma', 'LS Livingstone', 'Lalit Yadav', 'M Shahrukh Khan', 'MA Agarwal', 'MC Henriques', 'MK Lomror', 'MK Pandey', 'MM Ali', 'MP Stoinis', 'MR Marsh', 'MS Bisla', 'MS Dhoni', 'Mandeep Singh', 'N Pooran', 'N Rana', 'P Simran Singh', 'PA Patel', 'PD Salt', 'PJ Cummins', 'PP Shaw', 'Q de Kock', 'R Dravid', 'R Parag', 'R Tewatia', 'RA Jadeja', 'RA Tripathi', 'RD Gaikwad', 'RG Sharma', 'RK Singh', 'RM Patidar', 'RR Pant', 'RR Rossouw', 'RV Uthappa', 'Rashid Khan', 'S Dhawan', 'S Dube', 'SA Yadav', 'SC Ganguly', 'SK Raina', 'SM Curran', 'SN Khan', 'SO Hetmyer', 'SP Narine', 'SR Tendulkar', 'SS Iyer', 'SS Tiwary', 'SV Samson', 'Shahbaz Ahmed', 'Shubman Gill', 'TH David', 'TM Head', 'Tilak Varma', 'V Kohli', 'V Sehwag', 'V Shankar', 'VR Iyer', 'WP Saha', 'Washington Sundar', 'YBK Jaiswal', 'Yuvraj Singh']
 
 
 st.sidebar.title("IPL Data Analytics")
@@ -121,7 +121,10 @@ def load_batsman_details(batsman):
             st.metric('Fours', str(player['fours'].values[0]))
 
         with col25:
-            st.metric('Ducks', str(duck[duck['batter'] == batsman]['batsman_runs'].values[0]))
+            if len(duck[duck['batter'] == batsman]['batsman_runs'].values) == 0:
+                st.metric('Ducks', '0')
+            else:
+                st.metric('Ducks', str(duck[duck['batter'] == batsman]['batsman_runs'].values[0]))
             
     col1, col2 = st.columns(2)
 
