@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import streamlit as st
 from bowler_analysis import load_bowler_details
+from general_analysis import gen_analysis
 
 plt.style.use('dark_background')
 
@@ -32,7 +33,7 @@ player_list = ['A Badoni', 'A Mishra', 'AB de Villiers', 'AD Russell', 'AK Markr
 
 bowler_list = ['YS Chahal', 'PP Chawla', 'DJ Bravo', 'B Kumar', 'R Ashwin', 'SP Narine', 'A Mishra', 'SL Malinga', 'JJ Bumrah', 'RA Jadeja', 'Harbhajan Singh', 'Rashid Khan', 'UT Yadav', 'Sandeep Sharma', 'HV Patel', 'MM Sharma', 'Mohammed Shami', 'AR Patel', 'TA Boult', 'K Rabada', 'AD Russell', 'A Nehra', 'R Vinay Kumar', 'Z Khan', 'JD Unadkat', 'CH Morris', 'SN Thakur', 'Mohammed Siraj', 'I Sharma', 'Kuldeep Yadav', 'DS Kulkarni', 'CV Varun', 'Imran Tahir', 'DL Chahar', 'KV Sharma', 'Arshdeep Singh', 'KH Pandya', 'RD Chahar', 'Avesh Khan', 'KK Ahmed', 'MM Patel', 'KA Pollard']
 st.sidebar.title("IPL Data Analytics")
-option = st.sidebar.selectbox('Select One', ['Batsman', 'Bowler'])
+option = st.sidebar.selectbox('Select One', ['General Analysis', 'Batsman', 'Bowler'])
 
 def load_batsman_details(batsman):
     st.title(batsman)
@@ -370,3 +371,6 @@ elif option == 'Bowler':
 
     if btn2:
         load_bowler_details(selected_bowler)
+
+elif option == 'General Analysis':
+    gen_analysis()
