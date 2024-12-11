@@ -15,7 +15,7 @@ def load_bowler_details(bowler):
     st.title(bowler)
     col11, col12 = st.columns(2)
     with col11:
-        st.image(f'players/imagenotfound.png', width=400)
+        st.image(f'players/{bowler}.jpg', width=400)
     
     with col12:
         st.title("IPL Career Analysis")
