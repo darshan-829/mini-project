@@ -113,10 +113,10 @@ def load_batsman_details(batsman):
             st.metric('Fours', str(player['fours'].values[0]))
 
         with col25:
-            if len(duck[duck['batter'] == batsman]['batsman_runs'].values) == 0:
+            if len(duck[duck['batter'] == batsman]['ducks'].values) == 0:
                 st.metric('Ducks', '0')
             else:
-                st.metric('Ducks', str(duck[duck['batter'] == batsman]['batsman_runs'].values[0]))
+                st.metric('Ducks', str(duck[duck['batter'] == batsman]['ducks'].values[0]))
             
     col1, col2 = st.columns(2)
 
