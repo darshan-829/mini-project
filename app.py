@@ -9,11 +9,11 @@ plt.style.use('dark_background')
 st.set_page_config(layout='wide', page_title='IPL Data Analytics')
 st.title("IPL Data Analytics")
 
-new_df = pd.read_csv("dataset\\ipldata.csv")
-matches = pd.read_csv("dataset\\matches.csv")
-player_data = pd.read_csv('dataset\\total_data.csv')
-highest_score = pd.read_csv('dataset\\highest_score.csv')
-duck = pd.read_csv('dataset\\goldenduck.csv')
+new_df = pd.read_csv("dataset/ipldata.csv")
+matches = pd.read_csv("dataset/matches.csv")
+player_data = pd.read_csv('dataset/total_data.csv')
+highest_score = pd.read_csv('dataset/highest_score.csv')
+duck = pd.read_csv('dataset/goldenduck.csv')
 
 
 batsman_runs_per_match = new_df.groupby(['season', 'match_id', 'batter'])['batsman_runs'].sum().reset_index()

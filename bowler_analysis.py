@@ -5,11 +5,11 @@ import matplotlib.pyplot as plt
 import streamlit as st
 
 
-bowler_data = pd.read_csv('dataset\\bowler_data.csv').set_index('bowler')
-wicket_over = pd.read_csv("dataset\\wicket_over_over.csv").set_index('bowler')
-wicket_season = pd.read_csv("dataset\\wickets_over_years.csv").set_index('bowler')
-run_season = pd.read_csv("dataset\\runs_conceded_season.csv").set_index('bowler')
-runs_over = pd.read_csv("dataset\\runs_conceded_over.csv").set_index('bowler')
+bowler_data = pd.read_csv('dataset/bowler_data.csv').set_index('bowler')
+wicket_over = pd.read_csv("dataset/wicket_over_over.csv").set_index('bowler')
+wicket_season = pd.read_csv("dataset/wickets_over_years.csv").set_index('bowler')
+run_season = pd.read_csv("dataset/runs_conceded_season.csv").set_index('bowler')
+runs_over = pd.read_csv("dataset/runs_conceded_over.csv").set_index('bowler')
 
 def load_bowler_details(bowler):
     st.title(bowler)
